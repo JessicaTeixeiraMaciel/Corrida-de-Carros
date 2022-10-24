@@ -6,11 +6,11 @@ public class Jogo {
     CarroCorridaService carroCorridaService = new CarroCorridaService();
     String ANSI_RESET = "\u001B[0m";
     String ANSI_ROXO = "\u001B[35m";
-    String ANSI_VERMELHO = "\u001B[31m";
     String ANSI_VERDE = "\u001B[32m";
     String ANSI_AMARELO = "\u001B[33m";
     String ANSI_AZUL = "\u001B[34m";
     String ANSI_CIANO = "\u001B[36m";
+    int tempo = 180;
 
     public void boasVidas(){
         System.out.println("Seja bem vindo(a) ao\n" + ANSI_CIANO +
@@ -72,7 +72,7 @@ public class Jogo {
 
         System.out.println("Antes de iniciar a competição gostariamos de passar algumas informações importantes:\n\n"+
                 "- O circuito completo tem 10km e a corrida será de volta única.\n" +
-                "- No km 7 há uma CURVA MUITO PERIGOSA, por isso é importante estar no MÁXIMO a 120km/h quando passar por ela!\n" +
+                "- No km 7 há uma CURVA MUITO PERIGOSA, por isso é importante estar no MÁXIMO a 220km/h quando passar por ela!\n" +
                 "- Você gastará 30s a cada comando que você der ao seu veículo.\n" +
                 "- O tempo máximo para finalizar o circuito é de 180s, após isso o competidor será automaticamente desclassificado.\n");
 
@@ -90,26 +90,40 @@ public class Jogo {
 
     public void rodadas(){
         Scanner sc = new Scanner(System.in);
-        int tempo = 180;
+        tempo = 180;
+        double novaDistanciaPercorrida = 0;
         while (tempo > 0){
             painelDeControle();
-
-            int escolha = sc.nextInt();
-            switch(escolha){
+            switch(sc.nextInt()){
                 case 1:
                     carroCorridaService.ligar(dadosCorrida.carroD);
+                    novaDistanciaPercorrida = dadosCorrida.carroD.getDistanciaPercorrida() + (0.5 * dadosCorrida.carroD.getVelocidadeAtual()) / 60;
+                    dadosCorrida.carroD.setDistanciaPercorrida(novaDistanciaPercorrida);
                     break;
                 case 2 :
                     carroCorridaService.acelerar(60.0,dadosCorrida.carroD);
+                    novaDistanciaPercorrida = dadosCorrida.carroD.getDistanciaPercorrida() + (0.5 * dadosCorrida.carroD.getVelocidadeAtual()) / 60;
+                    dadosCorrida.carroD.setDistanciaPercorrida(novaDistanciaPercorrida);
                     break;
                 case 3 :
                     carroCorridaService.frear(60.0,dadosCorrida.carroD);
+                    novaDistanciaPercorrida = dadosCorrida.carroD.getDistanciaPercorrida() + (0.5 * dadosCorrida.carroD.getVelocidadeAtual()) / 60;
+                    dadosCorrida.carroD.setDistanciaPercorrida(novaDistanciaPercorrida);
                     break;
                 case 4 :
-                    carroCorridaService.parar(dadosCorrida.carroD);
+                    carroCorridaService.acelerar(0.0,dadosCorrida.carroD);
+                    novaDistanciaPercorrida = dadosCorrida.carroD.getDistanciaPercorrida() + (0.5 * dadosCorrida.carroD.getVelocidadeAtual()) / 60;
+                    dadosCorrida.carroD.setDistanciaPercorrida(novaDistanciaPercorrida);
                     break;
                 case 5 :
+                    carroCorridaService.parar(dadosCorrida.carroD);
+                    novaDistanciaPercorrida = dadosCorrida.carroD.getDistanciaPercorrida() + (0.5 * dadosCorrida.carroD.getVelocidadeAtual()) / 60;
+                    dadosCorrida.carroD.setDistanciaPercorrida(novaDistanciaPercorrida);
+                    break;
+                case 6 :
                     carroCorridaService.desligar(dadosCorrida.carroD);
+                    novaDistanciaPercorrida = dadosCorrida.carroD.getDistanciaPercorrida() + (0.5 * dadosCorrida.carroD.getVelocidadeAtual()) / 60;
+                    dadosCorrida.carroD.setDistanciaPercorrida(novaDistanciaPercorrida);
                     break;
             }
             tempo = tempo - 30;
@@ -117,24 +131,25 @@ public class Jogo {
     }
 
     public void painelDeControle(){
-        int tempo = 180;
-        double distancia = 0.0;
-        while (tempo > 0){
+        String status;
+
+        if (dadosCorrida.carroD.getLigado()) {
+            status = "Ligado";
+        } else {
+            status = "Desligado";
+        }
             System.out.printf("\nTempo de prova restante: %ds\n"+
-                    "Colocação atual: º\n"+
+                    "Colocação atual: %dº\n"+
                     "|------------------------------------------------------------------------|\n" +
                     "|                             PAINEL DE CONTROLE                         |\n" +
                     "|------------------------------------------------------------------------|\n" +
-                    "|Opção '1' - Ligar o carro           |Status do veículo:                 |\n" +
-                    "|Opção '2' - Acelerar (+ 60 km/h)    |Velocidade atual:    km/h          |\n" +
-                    "|Opção '3' - Frear (- 60 km/h)       |Km percorridos: %.1f km            |\n" +
-                    "|Opção '4' - Parar o carro           |                                   |\n" +
-                    "|Opção '5' - Desligar o carro        |                                   |\n" +
-                    "|------------------------------------------------------------------------|\n" +
-                    ANSI_CIANO + "O que você vai fazer? Insira sua opção aqui:" + ANSI_RESET,tempo,distancia);
-            tempo = tempo - 30;
-            distancia = carroCorridaService.exibirDistanciaPercorrida(dadosCorrida.carroD);
-        }
+                    " Opção '1' - Ligar o carro            | Status do veículo: %s \n" +
+                    " Opção '2' - Acelerar (+ 60 km/h)     | Velocidade atual:  %.1f km/h \n" +
+                    " Opção '3' - Frear (- 60 km/h)        | Km percorridos: %.1f km  \n" +
+                    " Opção '4' - Manter Velocidade        |   \n" +
+                    " Opção '5' - Parar o carro            |                         \n" +
+                    " Opção '6' - Desligar o carro         |                         \n" +
+                    "--------------------------------------------------------------------------\n" +
+                    ANSI_CIANO + "O que você vai fazer? Insira sua opção aqui:" + ANSI_RESET,tempo,1,status,dadosCorrida.carroD.getVelocidadeAtual(),dadosCorrida.carroD.getDistanciaPercorrida());
     }
-
 }

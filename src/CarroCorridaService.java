@@ -1,33 +1,35 @@
 public class CarroCorridaService {
+    String ANSI_VERMELHO = "\u001B[31m";
+    String ANSI_RESET = "\u001B[0m";
     public void acelerar (Double valor, CarroCorrida carro){
         double novaVelocidade = carro.getVelocidadeAtual() + valor;
         double novaDistanciaPercorrida = carro.getDistanciaPercorrida() + (0.5 * carro.getVelocidadeAtual()) / 60;
 
         if (!carro.getLigado()){
-            System.out.printf("O carro %d está desligado. Para acelera-lo primeiro ligue-o.\n",carro.getNumeroCarro());
+            System.out.printf(ANSI_VERMELHO + "O carro %d está desligado. Para acelera-lo primeiro ligue-o.\n" + ANSI_RESET,carro.getNumeroCarro());
         }else if(valor < 0){
-            System.out.println("Entrada inválida. O valor inserido deve ser maior ou igual a zero.");
+            System.out.println( ANSI_VERMELHO + "Entrada inválida. O valor inserido deve ser maior ou igual a zero." + ANSI_RESET);
         }else if(carro.getVelocidadeAtual()==0 && carro.getLigado() && valor == 0){
-            System.out.printf("O carro %d se mantém parado.\n",carro.getNumeroCarro());
+            System.out.printf( ANSI_VERMELHO + "O carro %d se mantém parado.\n" + ANSI_RESET,carro.getNumeroCarro());
         }else if(carro.getVelocidadeAtual().equals(carro.getVelocidadeMaxima()) && carro.getLigado() && valor == 0){
-            System.out.printf("O carro %d se mantém a %.2f km/h.\n",carro.getNumeroCarro(), carro.getVelocidadeAtual());
+            System.out.printf( ANSI_VERMELHO + "O carro %d se mantém a %.2f km/h.\n" + ANSI_RESET,carro.getNumeroCarro(), carro.getVelocidadeAtual());
         }else if(carro.getVelocidadeAtual().equals(carro.getVelocidadeMaxima()) && carro.getLigado() && valor > 0){
-            System.out.printf("O carro %d já está na velocidade máxima! Ele se mantém a %.2f km/h.\n",carro.getNumeroCarro(), carro.getVelocidadeAtual());
+            System.out.printf( ANSI_VERMELHO + "O carro %d já está na velocidade máxima! Ele se mantém a %.2f km/h.\n" + ANSI_RESET,carro.getNumeroCarro(), carro.getVelocidadeAtual());
         }else{
             if (novaVelocidade >= carro.getVelocidadeMaxima() && carro.getLigado()) {
                 carro.setVelocidadeAtual(carro.getVelocidadeMaxima());
                 carro.setDistanciaPercorrida(novaDistanciaPercorrida);
-                System.out.printf("O carro %d atingiu a velocida máxima de %.2f km/h.\n",carro.getNumeroCarro(), carro.getVelocidadeAtual());
+                System.out.printf( ANSI_VERMELHO + "O carro %d atingiu a velocida máxima de %.2f km/h.\n" + ANSI_RESET,carro.getNumeroCarro(), carro.getVelocidadeAtual());
             }else if (carro.getLigado() && valor == 0){
                 carro.setVelocidadeAtual(novaVelocidade);
                 carro.setDistanciaPercorrida(novaDistanciaPercorrida);
-                System.out.printf("O carro %d se mantém a %.2f km/h.\n",carro.getNumeroCarro(), carro.getVelocidadeAtual());
+                System.out.printf( ANSI_VERMELHO + "O carro %d se mantém a %.2f km/h.\n" + ANSI_RESET,carro.getNumeroCarro(), carro.getVelocidadeAtual());
             }else if (carro.getLigado() && valor > 0){
                 carro.setVelocidadeAtual(novaVelocidade);
                 carro.setDistanciaPercorrida(novaDistanciaPercorrida);
-                System.out.printf("O carro %d atingiu a velocidade de %.2f km/h.\n",carro.getNumeroCarro(), carro.getVelocidadeAtual());
+                System.out.printf( ANSI_VERMELHO + "O carro %d atingiu a velocidade de %.2f km/h.\n" + ANSI_RESET,carro.getNumeroCarro(), carro.getVelocidadeAtual());
             }else {
-                System.out.println("Entrada inválida. A velocidade deve ser um número real.");
+                System.out.printf( ANSI_VERMELHO + "Entrada inválida. A velocidade deve ser um número real. O carro %d se mantém a %.2f km/h.\n" + ANSI_RESET,carro.getNumeroCarro(), carro.getVelocidadeAtual());
             }
         }
     }
@@ -35,9 +37,9 @@ public class CarroCorridaService {
     public void ligar(CarroCorrida carro){
         if(carro.getVelocidadeAtual() == 0.0 && !carro.getLigado()){
             carro.setLigado(true);
-            System.out.printf("O carro %d foi ligado.\n",carro.getNumeroCarro());
+            System.out.printf( ANSI_VERMELHO + "O carro %d foi ligado.\n" + ANSI_RESET,carro.getNumeroCarro());
         }else{
-            System.out.printf("Atenção! O carro %d já está ligado.\n",carro.getNumeroCarro());
+            System.out.printf( ANSI_VERMELHO + "Atenção! O carro %d já está ligado.\n" + ANSI_RESET,carro.getNumeroCarro());
         }
     }
 
@@ -45,39 +47,35 @@ public class CarroCorridaService {
 
         if(carro.getVelocidadeAtual() == 0.0 && carro.getLigado()){
             carro.setLigado(false);
-            System.out.printf("O carro %d foi desligado.\n",carro.getNumeroCarro());
+            System.out.printf(ANSI_VERMELHO + "O carro %d foi desligado.\n" + ANSI_RESET,carro.getNumeroCarro());
         }else if(carro.getLigado()){
-            System.out.printf("O carro %d não pode ser desligado pois ainda está em movimento.\n",carro.getNumeroCarro());
+            System.out.printf(ANSI_VERMELHO + "Entrada inválida! O carro %d não pode ser desligado pois ainda está em movimento. \nO carro %d se mantém a %.2f km/h.\n" + ANSI_RESET,carro.getNumeroCarro(),carro.getNumeroCarro(), carro.getVelocidadeAtual());
         }else{
-            System.out.printf("Atenção! O carro %d já está desligado.\n",carro.getNumeroCarro());
+            System.out.printf(ANSI_VERMELHO + "Atenção! O carro %d já está desligado.\n" + ANSI_RESET,carro.getNumeroCarro());
         }
     }
 
     public void frear(Double valor, CarroCorrida carro){
         double novaVelocidade = carro.getVelocidadeAtual() - valor;
-        double novaDistanciaPercorrida = carro.getDistanciaPercorrida() + (0.5 * carro.getVelocidadeAtual()) / 60;
 
         if(!carro.getLigado()) {
-            System.out.printf("O carro %d está desligado. Para frea-lo primeiro ligue-o.\n",carro.getNumeroCarro());
+            System.out.printf(ANSI_VERMELHO + "O carro %d está desligado. Para frea-lo primeiro ligue-o.\n" + ANSI_RESET,carro.getNumeroCarro());
         }else if(valor < 0){
-            System.out.println("Entrada inválida. O valor inserido deve ser maior ou igual a zero.");
+            System.out.println(ANSI_VERMELHO + "Entrada inválida. O valor inserido deve ser maior ou igual a zero." + ANSI_RESET);
         }else if(carro.getVelocidadeAtual()==0 && carro.getLigado() && valor == 0) {
-            System.out.printf("Atenção! O carro %d já está parado.\n", carro.getNumeroCarro());
+            System.out.printf(ANSI_VERMELHO + "Atenção! O carro %d já está parado.\n", carro.getNumeroCarro());
         }else{
             if(carro.getLigado() && valor == 0){
                 carro.setVelocidadeAtual(novaVelocidade);
-                carro.setDistanciaPercorrida(novaDistanciaPercorrida);
-                System.out.printf("O carro %d se mantém a %.2f km/h.\n",carro.getNumeroCarro(), carro.getVelocidadeAtual());
+                System.out.printf(ANSI_VERMELHO + "O carro %d se mantém a %.2f km/h.\n" + ANSI_RESET,carro.getNumeroCarro(), carro.getVelocidadeAtual());
             }else if (carro.getLigado() && valor > 0 && novaVelocidade == 0){
                 carro.setVelocidadeAtual(novaVelocidade);
-                carro.setDistanciaPercorrida(novaDistanciaPercorrida);
-                System.out.printf("O carro %d reduziu a velocidade até parar.\n",carro.getNumeroCarro());
+                System.out.printf(ANSI_VERMELHO + "O carro %d reduziu a velocidade até parar.\n" + ANSI_RESET,carro.getNumeroCarro());
             }else if (carro.getLigado() && valor > 0){
                 carro.setVelocidadeAtual(novaVelocidade);
-                carro.setDistanciaPercorrida(novaDistanciaPercorrida);
-                System.out.printf("A velocidade do carro %d reduziu para %.2f km/h.\n",carro.getNumeroCarro(), carro.getVelocidadeAtual());
+                System.out.printf(ANSI_VERMELHO + "A velocidade do carro %d reduziu para %.2f km/h.\n" + ANSI_RESET,carro.getNumeroCarro(), carro.getVelocidadeAtual());
             }else {
-                System.out.println("Entrada inválida. A velocidade deve ser um número real.");
+                System.out.printf(ANSI_VERMELHO + "Entrada inválida. A velocidade deve ser um número real. O carro %d se mantém a %.2f km/h.\n" + ANSI_RESET,carro.getNumeroCarro(), carro.getVelocidadeAtual());
             }
         }
     }
@@ -87,17 +85,11 @@ public class CarroCorridaService {
         double novaDistanciaPercorrida = carro.getDistanciaPercorrida() + (0.5 * carro.getVelocidadeAtual()) / 60;
 
         if(carro.getVelocidadeAtual() == 0.0 && carro.getLigado()){
-            System.out.printf("Atenção! O carro %d já está parado.\n",carro.getNumeroCarro());
+            System.out.printf(ANSI_VERMELHO + "Atenção! O carro %d já está parado.\n" + ANSI_RESET,carro.getNumeroCarro());
         }else{
             carro.setVelocidadeAtual(novaVelocidade);
             carro.setDistanciaPercorrida(novaDistanciaPercorrida);
-            System.out.printf("O carro %d parou.\n",carro.getNumeroCarro());
+            System.out.printf(ANSI_VERMELHO + "O carro %d reduziu a velocidade até parar.\n" + ANSI_RESET,carro.getNumeroCarro());
         }
-
-
-    }
-
-    public double exibirDistanciaPercorrida (CarroCorrida carro){
-        return carro.getDistanciaPercorrida();
     }
 }
