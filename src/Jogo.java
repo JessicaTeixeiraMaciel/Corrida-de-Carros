@@ -34,27 +34,43 @@ public class Jogo {
         System.out.println("1) Nome:");
         dadosCorrida.nomeJogador = sc.next();
 
-
-        Boolean validacao = false;
-        while (!validacao){
+        while (true)
+        {
             System.out.println("2) Idade:");
-            if(sc.hasNextInt()){
-                dadosCorrida.idadeJogador = sc.nextInt();
-                validacao = true;
-            }else{
-            System.out.println(ANSI_VERMELHO + "Entrada inválida. O valor deve ser um número inteiro." + ANSI_RESET);
-            sc.next();
+            try
+            {
+                int idade = sc.nextInt();
+                if(idade > 0)
+                {
+                    dadosCorrida.idadeJogador = idade;
+                    break;
+                }
+                else
+                    System.out.println(ANSI_VERMELHO + "Entrada inválida. O valor deve ser maior que 0." + ANSI_RESET);
+            }catch (Exception e)
+            {
+                System.out.println(ANSI_VERMELHO + "Entrada inválida. O valor deve ser um número inteiro." + ANSI_RESET);
+                sc.next();
             }
         }
 
-        System.out.println("3) Sexo (f/m):");
-        switch (sc.next()){
-            case "f":
+
+        while (true){
+            System.out.println("3) Sexo (f/m):");
+            
+            String sexo = sc.next();
+            
+            if(sexo.equalsIgnoreCase("f"))
+            {
                 dadosCorrida.sexoJogador = Sexo.feminino;
                 break;
-            case "m":
+            } else if (sexo.equalsIgnoreCase("m")) {
                 dadosCorrida.sexoJogador = Sexo.masculino;
                 break;
+            }else 
+            {
+                System.out.println(ANSI_VERMELHO + "Entrada inválida!" + ANSI_RESET);
+            }
         }
 
         System.out.println("4) Nome da equipe:");
@@ -62,6 +78,7 @@ public class Jogo {
 
         System.out.println("---------------------------------------------------------------------------------------------------------------");
     }
+
 
     public void equipes(){
         System.out.printf("Inscrição finalizada com sucesso! Veja abaixo a lista completa de participantes:\n\n" +
