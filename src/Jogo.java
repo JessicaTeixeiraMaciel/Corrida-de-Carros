@@ -5,12 +5,13 @@ public class Jogo {
     DadosCorrida dadosCorrida = new DadosCorrida();
     CarroCorridaService carroCorridaService = new CarroCorridaService();
     String ANSI_RESET = "\u001B[0m";
+    String ANSI_VERMELHO = "\u001B[31m";
     String ANSI_ROXO = "\u001B[35m";
     String ANSI_VERDE = "\u001B[32m";
     String ANSI_AMARELO = "\u001B[33m";
     String ANSI_AZUL = "\u001B[34m";
     String ANSI_CIANO = "\u001B[36m";
-    int tempo = 180;
+    int tempo = 330;
     int tamanhoPercurso = 10;
 
     public void boasVidas(){
@@ -33,8 +34,18 @@ public class Jogo {
         System.out.println("1) Nome:");
         dadosCorrida.nomeJogador = sc.next();
 
-        System.out.println("2) Idade:");
-        dadosCorrida.idadeJogador = sc.nextInt();
+
+        Boolean validacao = false;
+        while (!validacao){
+            System.out.println("2) Idade:");
+            if(sc.hasNextInt()){
+                dadosCorrida.idadeJogador = sc.nextInt();
+                validacao = true;
+            }else{
+            System.out.println(ANSI_VERMELHO + "Entrada inválida. O valor deve ser um número inteiro." + ANSI_RESET);
+            sc.next();
+            }
+        }
 
         System.out.println("3) Sexo (f/m):");
         switch (sc.next()){
@@ -71,11 +82,11 @@ public class Jogo {
 
     public void regras(){
 
-        System.out.println("Antes de iniciar a competição gostariamos de passar algumas informações importantes:\n\n"+
-                "- O circuito completo tem 10km e a corrida será de volta única.\n" +
-                "- No km 7 há uma CURVA MUITO PERIGOSA, por isso é importante estar no MÁXIMO a 220km/h quando passar por ela!\n" +
+        System.out.printf("Antes de iniciar a competição gostariamos de passar algumas informações importantes:\n\n"+
+                "- O circuito completo tem %d km e a corrida será de volta única.\n" +
                 "- Você gastará 30s a cada comando que você der ao seu veículo.\n" +
-                "- O tempo máximo para finalizar o circuito é de 180s, após isso o competidor será automaticamente desclassificado.\n");
+                "- O tempo máximo para finalizar o circuito é de %ds, após isso o competidor será automaticamente desclassificado.\n" +
+                "- Quando houver um ou mais vencedores a corrida acabará.\n",tamanhoPercurso,tempo);
 
         System.out.println("      " + ANSI_AZUL + "____/   ___                  " + ANSI_VERDE + "____/   ___                  " + ANSI_AMARELO + "____/   ___                  " + ANSI_ROXO +"____/   ___\n" +
                 "     " + ANSI_AZUL + "|_ 1 \\__'  _\\                " + ANSI_VERDE + "|_ 2 \\__'  _\\                " + ANSI_AMARELO + "|_ 3 \\__'  _\\                " + ANSI_ROXO + "|_ 4 \\__'  _\\      \n" +
@@ -91,7 +102,6 @@ public class Jogo {
 
     public void rodadas(){
         Scanner sc = new Scanner(System.in);
-        tempo = 330;
         double novaDistanciaPercorrida = 0;
         dadosCorrida.rodada = 0;
         while (tempo > 0 && novaDistanciaPercorrida < tamanhoPercurso && dadosCorrida.carroA.getDistanciaPercorrida() < tamanhoPercurso && dadosCorrida.carroB.getDistanciaPercorrida() < tamanhoPercurso && dadosCorrida.carroC.getDistanciaPercorrida() < tamanhoPercurso){
@@ -134,15 +144,15 @@ public class Jogo {
         }
 
         if (dadosCorrida.carroD.getDistanciaPercorrida() >= tamanhoPercurso){
-            System.out.printf("A corrida acabou! O Carro 4 é o grande Vencedor! Parabéns %s e toda equipe %s pela vitória!", dadosCorrida.pilotoD.getNome(), dadosCorrida.pilotoD.getEquipe());
+            System.out.printf("\nA corrida acabou! O Carro 4 é o grande Vencedor! Parabéns %s e toda equipe %s pela vitória!", dadosCorrida.pilotoD.getNome(), dadosCorrida.pilotoD.getEquipe());
         }else if (dadosCorrida.carroA.getDistanciaPercorrida() >= tamanhoPercurso){
-            System.out.printf("A corrida acabou! O Carro 1 é o grande Vencedor! Parabéns %s e toda equipe %s pela vitória!", dadosCorrida.pilotoA.getNome(), dadosCorrida.pilotoA.getEquipe());
+            System.out.printf("\nA corrida acabou! O Carro 1 é o grande Vencedor! Parabéns %s e toda equipe %s pela vitória!", dadosCorrida.pilotoA.getNome(), dadosCorrida.pilotoA.getEquipe());
         }else if (dadosCorrida.carroB.getDistanciaPercorrida() >= tamanhoPercurso){
-            System.out.printf("A corrida acabou! O Carro 2 é o grande Vencedor! Parabéns %s e toda equipe %s pela vitória!", dadosCorrida.pilotoB.getNome(), dadosCorrida.pilotoB.getEquipe());
+            System.out.printf("\nA corrida acabou! O Carro 2 é o grande Vencedor! Parabéns %s e toda equipe %s pela vitória!", dadosCorrida.pilotoB.getNome(), dadosCorrida.pilotoB.getEquipe());
         }else if (dadosCorrida.carroC.getDistanciaPercorrida() >= tamanhoPercurso){
-            System.out.printf("A corrida acabou! O Carro 3 é o grande Vencedor! Parabéns %s e toda equipe %s pela vitória!", dadosCorrida.pilotoC.getNome(), dadosCorrida.pilotoC.getEquipe());
+            System.out.printf("\nA corrida acabou! O Carro 3 é o grande Vencedor! Parabéns %s e toda equipe %s pela vitória!", dadosCorrida.pilotoC.getNome(), dadosCorrida.pilotoC.getEquipe());
         }else {
-            System.out.println("O tempo acabou e você foi desclassificado!");
+            System.out.println("\nO tempo acabou e você foi desclassificado!");
         }
     }
 
@@ -155,18 +165,17 @@ public class Jogo {
             status = "Desligado";
         }
             System.out.printf("\nTempo de prova restante: %ds\n"+
-                    "Colocação atual: %dº\n"+
                     "|------------------------------------------------------------------------|\n" +
                     "|                             PAINEL DE CONTROLE                         |\n" +
                     "|------------------------------------------------------------------------|\n" +
                     " Opção '1' - Ligar o carro            | Status do veículo: %s \n" +
-                    " Opção '2' - Acelerar (+ 60 km/h)     | Velocidade atual:  %.1f km/h \n" +
+                    " Opção '2' - Acelerar (+ 60 km/h)     | Velocidade atual: %.1f km/h \n" +
                     " Opção '3' - Frear (- 60 km/h)        | Km percorridos: %.1f km  \n" +
                     " Opção '4' - Manter Velocidade        |   \n" +
                     " Opção '5' - Parar o carro            |                         \n" +
                     " Opção '6' - Desligar o carro         |                         \n" +
                     "--------------------------------------------------------------------------\n" +
-                    ANSI_CIANO + "O que você vai fazer? Insira sua opção aqui:" + ANSI_RESET,tempo,1,status,dadosCorrida.carroD.getVelocidadeAtual(),dadosCorrida.carroD.getDistanciaPercorrida());
+                    ANSI_CIANO + "O que você vai fazer? Insira sua opção aqui:" + ANSI_RESET,tempo,status,dadosCorrida.carroD.getVelocidadeAtual(),dadosCorrida.carroD.getDistanciaPercorrida());
     }
 
     public void linhaDoTempo(){
