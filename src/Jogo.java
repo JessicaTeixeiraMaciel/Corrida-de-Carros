@@ -32,7 +32,7 @@ public class Jogo {
                 "|                                        FORMULÁRIO DE INSCRIÇÃO                                              |\n" +
                 "|-------------------------------------------------------------------------------------------------------------|\n");
         System.out.println("1) Nome:");
-        dadosCorrida.nomeJogador = sc.next();
+        dadosCorrida.nomeJogador = sc.nextLine();
 
         while (true)
         {
@@ -74,7 +74,9 @@ public class Jogo {
         }
 
         System.out.println("4) Nome da equipe:");
-        dadosCorrida.equipeJogador = sc.next();
+        sc.nextLine();
+        dadosCorrida.equipeJogador = sc.nextLine();
+
 
         System.out.println("---------------------------------------------------------------------------------------------------------------");
     }

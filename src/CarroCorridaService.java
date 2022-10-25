@@ -1,5 +1,5 @@
 public class CarroCorridaService {
-    String ANSI_VERMELHO = "\u001B[31m";
+    String ANSI_VERMELHO = "\u001B[33m";
     String ANSI_RESET = "\u001B[0m";
 
     public void acelerar (Double valor, CarroCorrida carro){
