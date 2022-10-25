@@ -134,11 +134,15 @@ public class Jogo {
         }
 
         if (dadosCorrida.carroD.getDistanciaPercorrida() >= tamanhoPercurso){
-            System.out.println("Parabéns! Você finalizou o percurso!");
-        }else if {
-            System.out.println("O tempo acabou e voce foi desclassificado!");
+            System.out.printf("A corrida acabou! O Carro 4 é o grande Vencedor! Parabéns %s e toda equipe %s pela vitória!", dadosCorrida.pilotoD.getNome(), dadosCorrida.pilotoD.getEquipe());
+        }else if (dadosCorrida.carroA.getDistanciaPercorrida() >= tamanhoPercurso){
+            System.out.printf("A corrida acabou! O Carro 1 é o grande Vencedor! Parabéns %s e toda equipe %s pela vitória!", dadosCorrida.pilotoA.getNome(), dadosCorrida.pilotoA.getEquipe());
+        }else if (dadosCorrida.carroB.getDistanciaPercorrida() >= tamanhoPercurso){
+            System.out.printf("A corrida acabou! O Carro 2 é o grande Vencedor! Parabéns %s e toda equipe %s pela vitória!", dadosCorrida.pilotoB.getNome(), dadosCorrida.pilotoB.getEquipe());
+        }else if (dadosCorrida.carroC.getDistanciaPercorrida() >= tamanhoPercurso){
+            System.out.printf("A corrida acabou! O Carro 3 é o grande Vencedor! Parabéns %s e toda equipe %s pela vitória!", dadosCorrida.pilotoC.getNome(), dadosCorrida.pilotoC.getEquipe());
         }else {
-            System.out.println("O tempo acabou e voce foi desclassificado!");
+            System.out.println("O tempo acabou e você foi desclassificado!");
         }
     }
 
