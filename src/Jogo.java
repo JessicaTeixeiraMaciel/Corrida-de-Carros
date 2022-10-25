@@ -12,7 +12,7 @@ public class Jogo {
     String ANSI_AZUL = "\u001B[34m";
     String ANSI_CIANO = "\u001B[36m";
     int tempo = 330;
-    int tamanhoPercurso = 10;
+    int tamanhoPercurso = 20;
 
     public void boasVidas(){
         System.out.println("Seja bem vindo(a) ao\n" + ANSI_CIANO +
