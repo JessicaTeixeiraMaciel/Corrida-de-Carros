@@ -11,6 +11,7 @@ public class Jogo {
     String ANSI_AZUL = "\u001B[34m";
     String ANSI_CIANO = "\u001B[36m";
     int tempo = 180;
+    int tamanhoPercurso = 10;
 
     public void boasVidas(){
         System.out.println("Seja bem vindo(a) ao\n" + ANSI_CIANO +
@@ -90,9 +91,10 @@ public class Jogo {
 
     public void rodadas(){
         Scanner sc = new Scanner(System.in);
-        tempo = 180;
+        tempo = 330;
         double novaDistanciaPercorrida = 0;
-        while (tempo > 0){
+        dadosCorrida.rodada = 0;
+        while (tempo > 0 && novaDistanciaPercorrida < tamanhoPercurso && dadosCorrida.carroA.getDistanciaPercorrida() < tamanhoPercurso && dadosCorrida.carroB.getDistanciaPercorrida() < tamanhoPercurso && dadosCorrida.carroC.getDistanciaPercorrida() < tamanhoPercurso){
             painelDeControle();
             switch(sc.nextInt()){
                 case 1:
@@ -126,7 +128,17 @@ public class Jogo {
                     dadosCorrida.carroD.setDistanciaPercorrida(novaDistanciaPercorrida);
                     break;
             }
+            linhaDoTempo();
             tempo = tempo - 30;
+            dadosCorrida.rodada++;;
+        }
+
+        if (dadosCorrida.carroD.getDistanciaPercorrida() >= tamanhoPercurso){
+            System.out.println("Parabéns! Você finalizou o percurso!");
+        }else if {
+            System.out.println("O tempo acabou e voce foi desclassificado!");
+        }else {
+            System.out.println("O tempo acabou e voce foi desclassificado!");
         }
     }
 
@@ -151,5 +163,119 @@ public class Jogo {
                     " Opção '6' - Desligar o carro         |                         \n" +
                     "--------------------------------------------------------------------------\n" +
                     ANSI_CIANO + "O que você vai fazer? Insira sua opção aqui:" + ANSI_RESET,tempo,1,status,dadosCorrida.carroD.getVelocidadeAtual(),dadosCorrida.carroD.getDistanciaPercorrida());
+    }
+
+    public void linhaDoTempo(){
+        if (dadosCorrida.rodada == 0){
+            if (dadosCorrida.carroA.getDistanciaPercorrida() < tamanhoPercurso){
+            carroCorridaService.acelerar(60.0, dadosCorrida.carroA);
+            }
+            if (dadosCorrida.carroB.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.ligar(dadosCorrida.carroB);
+            }
+            if (dadosCorrida.carroC.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.acelerar(60.0, dadosCorrida.carroC);
+            }
+        } else if (dadosCorrida.rodada == 1){
+            if (dadosCorrida.carroA.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.acelerar(60.0, dadosCorrida.carroA);
+            }
+            if (dadosCorrida.carroB.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.acelerar(60.0, dadosCorrida.carroB);
+            }
+            if (dadosCorrida.carroC.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.acelerar(0.0, dadosCorrida.carroC);
+            }
+        } else if (dadosCorrida.rodada == 2){
+            if (dadosCorrida.carroA.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.acelerar(60.0, dadosCorrida.carroA);
+            }
+            if (dadosCorrida.carroB.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.frear(60.0, dadosCorrida.carroB);
+            }
+            if (dadosCorrida.carroC.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.acelerar(0.0, dadosCorrida.carroC);
+            }
+        } else if (dadosCorrida.rodada == 3){
+            if (dadosCorrida.carroA.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.acelerar(0.0, dadosCorrida.carroA);
+            }
+            if (dadosCorrida.carroB.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.desligar(dadosCorrida.carroB);
+            }
+            if (dadosCorrida.carroC.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.acelerar(60.0, dadosCorrida.carroC);
+            }
+        } else if (dadosCorrida.rodada == 4){
+            if (dadosCorrida.carroA.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.acelerar(0.0, dadosCorrida.carroA);
+            }
+            if (dadosCorrida.carroB.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.ligar(dadosCorrida.carroB);
+            }
+            if (dadosCorrida.carroC.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.acelerar(60.0, dadosCorrida.carroC);
+            }
+        } else if (dadosCorrida.rodada == 5){
+            if (dadosCorrida.carroA.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.acelerar(60.0, dadosCorrida.carroA);
+            }
+            if (dadosCorrida.carroB.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.acelerar(60.0, dadosCorrida.carroB);
+            }
+            if (dadosCorrida.carroC.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.frear(60.0, dadosCorrida.carroC);
+            }
+        } else if (dadosCorrida.rodada == 6){
+            if (dadosCorrida.carroA.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.acelerar(60.0, dadosCorrida.carroA);
+            }
+            if (dadosCorrida.carroB.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.acelerar(60.0, dadosCorrida.carroB);
+            }
+            if (dadosCorrida.carroC.getDistanciaPercorrida() <  tamanhoPercurso){
+                carroCorridaService.parar(dadosCorrida.carroC);
+            }
+        } else if (dadosCorrida.rodada == 7){
+            if (dadosCorrida.carroA.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.acelerar(0.0, dadosCorrida.carroA);
+            }
+            if (dadosCorrida.carroB.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.acelerar(60.0, dadosCorrida.carroB);
+            }
+            if (dadosCorrida.carroC.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.acelerar(60.0, dadosCorrida.carroC);
+            }
+        } else if (dadosCorrida.rodada == 8){
+            if (dadosCorrida.carroA.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.frear(60.0, dadosCorrida.carroA);
+            }
+            if (dadosCorrida.carroB.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.acelerar(60.0, dadosCorrida.carroB);
+            }
+            if (dadosCorrida.carroC.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.acelerar(60.0, dadosCorrida.carroC);
+            }
+        } else if (dadosCorrida.rodada == 9){
+            if (dadosCorrida.carroA.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.acelerar(60.0, dadosCorrida.carroA);
+            }
+            if (dadosCorrida.carroB.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.acelerar(0.0, dadosCorrida.carroB);
+            }
+            if (dadosCorrida.carroC.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.acelerar(60.0, dadosCorrida.carroC);
+            }
+        } else if (dadosCorrida.rodada == 10){
+            if (dadosCorrida.carroA.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.acelerar(60.0, dadosCorrida.carroA);
+            }
+            if (dadosCorrida.carroB.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.acelerar(60.0, dadosCorrida.carroB);
+            }
+            if (dadosCorrida.carroC.getDistanciaPercorrida() < tamanhoPercurso){
+                carroCorridaService.acelerar(60.0, dadosCorrida.carroC);
+            }
+        }
     }
 }

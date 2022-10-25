@@ -4,6 +4,7 @@ public class DadosCorrida{
     Integer idadeJogador;
     Enum sexoJogador;
     String equipeJogador;
+    int rodada;
 
 
     Piloto pilotoA = new Piloto("Max Verstappen", 25, Sexo.masculino,"Red Bull Racing");

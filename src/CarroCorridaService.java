@@ -92,4 +92,8 @@ public class CarroCorridaService {
             System.out.printf(ANSI_VERMELHO + "O carro %d reduziu a velocidade até parar.\n" + ANSI_RESET,carro.getNumeroCarro());
         }
     }
+
+    public void exibirDistanciaPercorrida (CarroCorrida carro){
+        System.out.println(carro.getDistanciaPercorrida());
+    }
 }
