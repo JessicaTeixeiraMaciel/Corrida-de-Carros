@@ -163,7 +163,7 @@ public class Jogo {
         }
 
         if (dadosCorrida.carroD.getDistanciaPercorrida() >= tamanhoPercurso){
-            System.out.printf("\nA corrida acabou! O Carro 4 é o grande Vencedor! Parabéns %s e toda equipe %s pela vitória!", dadosCorrida.pilotoD.getNome(), dadosCorrida.pilotoD.getEquipe());
+            System.out.printf("\nA corrida acabou! O Carro 4 é o grande Vencedor! Parabéns %s e toda equipe %s pela vitória!",  dadosCorrida.nomeJogador, dadosCorrida.equipeJogador);
         }else if (dadosCorrida.carroA.getDistanciaPercorrida() >= tamanhoPercurso){
             System.out.printf("\nA corrida acabou! O Carro 1 é o grande Vencedor! Parabéns %s e toda equipe %s pela vitória!", dadosCorrida.pilotoA.getNome(), dadosCorrida.pilotoA.getEquipe());
         }else if (dadosCorrida.carroB.getDistanciaPercorrida() >= tamanhoPercurso){
