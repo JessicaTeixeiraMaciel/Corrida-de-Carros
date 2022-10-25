@@ -89,10 +89,12 @@ public class CarroCorridaService {
 
         if(carro.getVelocidadeAtual() == 0.0 && carro.getLigado()){
             System.out.printf(ANSI_VERMELHO + "Atenção! O carro %d já está parado.\n" + ANSI_RESET,carro.getNumeroCarro());
-        }else{
+        }else if (carro.getLigado()){
             carro.setVelocidadeAtual(novaVelocidade);
             carro.setDistanciaPercorrida(novaDistanciaPercorrida);
             System.out.printf(ANSI_VERMELHO + "O carro %d reduziu a velocidade até parar.\n" + ANSI_RESET,carro.getNumeroCarro());
+        }else {
+            System.out.printf(ANSI_VERMELHO + "Atenção! O carro %d está deligado. Não há como para-lo.\n" + ANSI_RESET,carro.getNumeroCarro());
         }
     }
 }
